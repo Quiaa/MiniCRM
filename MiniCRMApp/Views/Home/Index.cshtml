@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MiniCRMApp.Models.Meeting>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="jumbotron">
+    <h1>Hoşgeldiniz!</h1>
+    <p class="lead">Mini CRM sistemine giriş yaptınız. Durum özeti aşağıdadır.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Toplam Firma</h3>
+            </div>
+            <div class="panel-body text-center">
+                <h2>@ViewBag.CompanyCount</h2>
+                <p>Kayıtlı Firma</p>
+                <a href="/Companies" class="btn btn-default btn-sm">Listeye Git &raquo;</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Toplam Görüşme</h3>
+            </div>
+            <div class="panel-body text-center">
+                <h2>@ViewBag.MeetingCount</h2>
+                <p>Yapılan Görüşme</p>
+                <a href="/Meetings" class="btn btn-default btn-sm">Listeye Git &raquo;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<h3>Son Eklenen 5 Görüşme</h3>
+@if (Model.Any())
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Firma</th>
+                <th>Tarih</th>
+                <th>Not</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(item.Company != null ? item.Company.Name : "Silinmiş Firma")</td>
+                    <td>@item.MeetingDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@item.Note</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info">Henüz görüşme kaydı yok.</div>
+}

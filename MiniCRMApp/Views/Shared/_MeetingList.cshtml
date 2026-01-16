@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MiniCRMApp.Models.Meeting>
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">
+        Bu firmaya ait henüz bir görüşme kaydı bulunmuyor.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Tür</th>
+                <th>Not</th>
+                <th>Sonraki Aksiyon</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderByDescending(x => x.MeetingDate))
+            {
+                <tr>
+                    <td>@item.MeetingDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@item.MeetingType</td>
+                    <td>@item.Note</td>
+                    <td>
+                        @(item.NextActionDate.HasValue ? item.NextActionDate.Value.ToString("dd.MM.yyyy") : "-")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
